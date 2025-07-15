@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Creative Chat Room</title>
+  <link rel="stylesheet" href="chat-style.css" />
+</head>
+<body>
+  <div id="login-screen" class="centered">
+    <h2>Welcome to ChatVerse 🌐</h2>
+    <input id="username" placeholder="Enter your name..." />
+    <button id="enter-chat">Join Chat</button>
+  </div>
+
+  <div id="chat-screen" class="hidden">
+    <div id="chat-box">
+      <ul id="chat-messages"></ul>
+      <form id="chat-form">
+        <input id="chat-input" autocomplete="off" placeholder="Type a message..." />
+        <button>Send</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="chat-client.js"></script>
+</body>
+</html>
+
