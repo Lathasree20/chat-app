@@ -11,16 +11,18 @@ const chatMessages = document.getElementById("chat-messages");
 
 let username = "";
 
+// Join chat after entering username
 enterChatBtn.addEventListener("click", () => {
   const name = usernameInput.value.trim();
   if (name) {
-    // username = name;
-    socket.emit("join", username);
-    loginScreen.classList.add("hidden");
-    chatScreen.classList.remove("hidden");
+    username = name;
+    socket.emit("newuser", username);
+    loginScreen.style.display = "none";
+    chatScreen.style.display = "block";
   }
 });
 
+// Handle sending messages
 chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const message = chatInput.value.trim();
@@ -30,17 +32,17 @@ chatForm.addEventListener("submit", (e) => {
   }
 });
 
+// Receive messages
 socket.on("receiveMessage", (data) => {
-  const li = document.createElement("li");
-  li.innerHTML = `<strong>${data.user}</strong> [${data.time}]: ${data.message}`;
-  chatMessages.appendChild(li);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+  const msg = document.createElement("div");
+  msg.textContent = `[${data.time}]: ${data.user}: ${data.message}`;
+  chatMessages.appendChild(msg);
 });
 
-socket.on("notification", (msg) => {
-  const li = document.createElement("li");
-  li.classList.add("system");
-  li.textContent = msg;
-  chatMessages.appendChild(li);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+// Notifications (e.g., user joined/left)
+socket.on("notification", (message) => {
+  const note = document.createElement("div");
+  note.textContent = message;
+  note.style.fontStyle = "italic";
+  chatMessages.appendChild(note);
 });
