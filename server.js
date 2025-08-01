@@ -1,27 +1,24 @@
 const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
-
 const app = express();
+const http = require("http");
 const server = http.createServer(app);
+const { Server } = require("socket.io");
 const io = new Server(server);
 
 app.use(express.static("public"));
 
 io.on("connection", (socket) => {
-  console.log("A user connected");
-
-  socket.on("join", (username) => {
+  socket.on("newuser", (username) => {
     socket.username = username;
-    socket.broadcast.emit("notification", `${username} joined the chat`);
+    io.emit("notification", `${username} joined the chat`);
   });
 
   socket.on("sendMessage", (message) => {
     const time = new Date().toLocaleTimeString();
     io.emit("receiveMessage", {
-      user: socket.username,
-      message,
-      time,
+      user: socket.username || "Unknown",
+      message: message,
+      time: time,
     });
   });
 
