@@ -88,3 +88,5 @@ Open your browser and visit http://localhost:3000 to use the chat application.
 
 OUTPUT:-
 
+![Image](https://github.com/user-attachments/assets/204ab874-9fac-4f4d-91aa-ddfb4c03740f)
+
